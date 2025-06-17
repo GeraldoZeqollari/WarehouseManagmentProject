@@ -233,7 +233,7 @@ public class OrderServiceImpl implements OrderService {
     private Order getOwnedOrder(Long orderId, String username) {
         log.info("Get owned order");
         Order order = ordersRepository.findById(orderId)
-                .orElseThrow(() -> new NotFoundException("Order", orderId));
+                .orElseThrow(() -> new EntityNotFoundException("Order not found"));
 
         if (!order.getClient().getUsername().equals(username)) {
             throw new ForbiddenException(String.format("Order %d does not belong to user '%s'", orderId, username));

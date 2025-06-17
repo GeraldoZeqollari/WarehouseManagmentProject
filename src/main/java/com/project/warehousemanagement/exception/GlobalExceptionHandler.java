@@ -34,9 +34,7 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(EntityNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse userNotFound(EntityNotFoundException ex, HttpServletRequest req) {
-
         return error(HttpStatus.NOT_FOUND, ex.getMessage(), req);
     }
 
@@ -45,6 +43,7 @@ public class GlobalExceptionHandler {
     public ErrorResponse handleConstraint(ConstraintViolationException ex, HttpServletRequest req) {
         return error(HttpStatus.BAD_REQUEST, ex.getMessage(), req);
     }
+
 
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<Map<String,String>> handleBadRequest(BadRequestException ex) {

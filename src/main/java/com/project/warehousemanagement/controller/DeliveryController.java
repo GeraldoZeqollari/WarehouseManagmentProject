@@ -1,8 +1,8 @@
 package com.project.warehousemanagement.controller;
 
+import com.project.warehousemanagement.dto.DeliveryScheduleRequest;
 import com.project.warehousemanagement.persistence.dto.DeliveryDto;
 import com.project.warehousemanagement.persistence.service.DeliveryService;
-import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +24,9 @@ public class DeliveryController {
     @PostMapping("/schedule/{orderId}")
     public ResponseEntity<DeliveryDto> schedule(@PathVariable Long orderId,
                                                 @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-                                                @RequestBody List<@Positive Long> truckIds) {
+                                                @RequestBody DeliveryScheduleRequest request) {
 
-        DeliveryDto body = deliveryService.scheduleDelivery(orderId, date, truckIds);
+        DeliveryDto body = deliveryService.scheduleDelivery(orderId, date, request.getTruckIds());
 
         URI location = URI.create("/api/manager/delivery/schedule/" + body.getId());
 
